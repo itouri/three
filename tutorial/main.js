@@ -15,36 +15,39 @@ function init() {
 
     // カメラを作成 画角とアスペクト比
     const camera = new THREE.PerspectiveCamera(45, width / height);
-    camera.position.set(0, 0, +1000);
+    camera.position.set(0, 0, 1000);
 
-    // 箱を作成 幅, 高さ, 奥行き
-    // const geometry = new THREE.BoxGeometry(400, 400, 400);
-    // const material = new THREE.MeshNormalMaterial();
-    // const box = new THREE.Mesh(geometry, material);
-    // scene.add(box);
+    // カメラコントローラを作成
+    const controls = new THREE.OrbitControls(camera);
 
     // 球体を作成
-    const geometry = new THREE.SphereGeometry(300, 30, 30);
+    const geometry = new THREE.BoxGeometry(300, 300, 300);
     const loader = new THREE.TextureLoader();
     const texture = loader.load('image/yariika.png');
-    const material = new THREE.MeshStandardMaterial({
-        map: texture
-    });
+    // const material = new THREE.MeshStandardMaterial({
+    //     map: texture
+    // });
+    const material = new THREE.MeshNormalMaterial();
     // メッシュを作成
     const mesh = new THREE.Mesh(geometry, material);
     // 3D空間にメッシュを追加
     scene.add(mesh);
 
-    // 平行光源
-    const directionalLight = new THREE.DirectionalLight(0xFFFFFF);
-    directionalLight.position.set(1, 1, 1);
+    // // 平行光源
+    // const directionalLight = new THREE.DirectionalLight(0xFFFFFF);
+    // directionalLight.position.set(1, 1, 1);
+
     // シーンに追加
-    scene.add(directionalLight);
+    //scene.add(directionalLight);
 
     tick();
 
     function tick() {
         mesh.rotation.y += 0.01;
+
+        // カメラコントローラーを更新
+        controls.update();
+        
         renderer.render(scene, camera); // レンダリング  
         // ちょっとよくわからない
         requestAnimationFrame(tick);
