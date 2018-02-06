@@ -20,6 +20,10 @@ function init() {
     // カメラコントローラを作成
     const controls = new THREE.OrbitControls(camera);
 
+    // 滑らかにカメラコントローラーを制御する
+    controls.enableDamping = true;
+    controls.dampingFactor = 1; // なにこれ
+
     // 球体を作成
     const geometry = new THREE.BoxGeometry(300, 300, 300);
     const loader = new THREE.TextureLoader();
