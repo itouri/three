@@ -14,11 +14,11 @@ function init() {
   // シーンを作成
   const scene = new THREE.Scene();
 
-  // カメラを作成
+  // カメラを作成 画角とアスペクト比
   const camera = new THREE.PerspectiveCamera(45, width / height);
   camera.position.set(0, 0, +1000);
 
-  // 箱を作成
+  // 箱を作成 幅, 高さ, 奥行き
   const geometry = new THREE.BoxGeometry(400, 400, 400);
   const material = new THREE.MeshNormalMaterial();
   const box = new THREE.Mesh(geometry, material);
@@ -26,11 +26,10 @@ function init() {
 
   tick();
 
-  // 毎フレーム時に実行されるループイベントです
   function tick() {
     box.rotation.y += 0.01;
-    renderer.render(scene, camera); // レンダリング
-
-    requestAnimationFrame(tick);
+    renderer.render(scene, camera); // レンダリング  
+    // ちょっとよくわからない
+     requestAnimationFrame(tick);
   }
 }
