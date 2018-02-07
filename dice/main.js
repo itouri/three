@@ -3,20 +3,14 @@
 var world, ground, timeStep = 1 / 60,
     diceRigid, dice,
     camera, scene, renderer, floorObj,
-    startDiceNum = 3,
-    cubeSize = 5,
     stopped = false;
-
-main();
 
 function main() {
     initCannon();
     initThree();
 
     //create a dice.
-    var ret = createDice();
-    dice = ret.dice;
-    diceRigid = ret.rigid;
+    [dice, diceRigid] = createDice();
 
     world.allowSleep = true;
     diceRigid.allowSleep = true;
@@ -32,7 +26,7 @@ function main() {
 }
 
 function createDice() {
-
+    const cubeSize = 5;
     var boxInfos = [
         {
             url: './image/2.png',
@@ -96,10 +90,11 @@ function createDice() {
     //body.angularVelocity.set(10, 10, 10);
     //body.angularDamping = 0.001;
 
-    return {
-        dice: dice,
-        rigid: body
-    };
+    return [dice, body];
+    // return {
+    //     dice: dice,
+    //     rigid: body
+    // };
 }
 
 function initCannon() {
@@ -126,13 +121,15 @@ function initCannon() {
 function initThree() {
     var w = window.innerWidth;
     var h = window.innerHeight;
-    camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 1000);
-    camera.position.set(10, 40, 50);
-    camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     scene = new THREE.Scene();
     renderer = new THREE.CSS3DRenderer();
     renderer.setSize(w, h);
+
+    camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 1000);
+    camera.position.set(10, 40, 50);
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
+    scene.add(camera);
 
     var textureSize = 800;
     var floorEle = document.createElement('div');
@@ -145,8 +142,6 @@ function initThree() {
     floorObj.position.fromArray([0, 0, 0]);
     floorObj.rotation.fromArray([Math.PI / 2, 0, 0]);
     scene.add(floorObj);
-
-    scene.add(camera);
 
     var container = document.getElementById('d0');
     container.appendChild(renderer.domElement);
@@ -174,7 +169,6 @@ function updatePhysics() {
         camera.position.x += 50;
         camera.lookAt(diceRigid.position.copy(new THREE.Vector3(0, 0, 0)));
     }
-
     ground.position.copy(floorObj.position);
     ground.quaternion.copy(floorObj.quaternion);
 }
@@ -206,7 +200,6 @@ function registerListener() {
                 document.getElementById('num').innerHTML = index + 1;
             }
         });
-
         stopped = true;
     });
 
