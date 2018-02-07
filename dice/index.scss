@@ -1,0 +1,24 @@
+@import "compass/reset";
+
+#gui {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    z-index: 100;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    border: solid 1px #666;
+    color: #fff;
+}
+
+#num {
+    position: absolute;
+    right: 15px;
+    bottom: 10px;
+    z-index: 100;
+    font-size: 90px;
+    font-weight: bold;
+    color: #fff;
+    -webkit-text-stroke: 5px black;
+    text-stroke: 5px black;
+}
